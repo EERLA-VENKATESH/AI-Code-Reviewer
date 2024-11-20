@@ -1,7 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 
-# Configure the API key for the Generative AI
+# Configure the API key for Generative AI
 genai.configure(api_key="AIzaSyB4tk6azgrb__-VQSgsNT2BW49ABjwaxJiI")
 
 # Define the system prompt
@@ -15,24 +15,24 @@ politely decline and tell them to ask a question from the data science domain on
 # Initialize the Streamlit app
 st.title("Data Science Tutor Application")
 
-# Create input fields and button
+# Create input field and button
 user_prompt = st.text_input("Enter your query:", placeholder="Type your query here...")
 btn_click = st.button("Generate Answer")
 
 # Handle button click
 if btn_click:
-    if user_prompt.strip():  # Ensure the user entered a prompt
+    if user_prompt.strip():  # Ensure the user entered a query
         try:
-            # Generate a response using the generative AI model
-            response = genai.chat(
-                model="models/chat-bison-001",  # Use an appropriate model name
+            # Generate a response using the Generative AI API
+            response = genai.generate_message(
+                model="chat-bison-001",  # Use the correct model
                 messages=[
                     {"role": "system", "content": sys_prompt},
                     {"role": "user", "content": user_prompt}
                 ]
             )
-            # Extract the generated content
-            st.write(response["candidates"][0]["content"])
+            # Display the response content
+            st.write(response.messages[-1]["content"])
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
