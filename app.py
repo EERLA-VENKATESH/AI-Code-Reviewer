@@ -12,9 +12,7 @@ Make sure to take examples while explaining a concept.
 If a student asks any question outside the data science scope, 
 politely decline and tell them to ask a question from the data science domain only."""
 
-# Initialize the generative model
-model_name = "models/gemini-1.5-flash"
-
+# Initialize the Streamlit app
 st.title("Data Science Tutor Application")
 
 # Create input fields and button
@@ -25,14 +23,16 @@ btn_click = st.button("Generate Answer")
 if btn_click:
     if user_prompt.strip():  # Ensure the user entered a prompt
         try:
-            # Generate a response using the model
-            response = genai.generate_text(
-                model=model_name,
-                prompt=user_prompt,
-                system_prompt=sys_prompt
+            # Generate a response using the generative AI model
+            response = genai.chat(
+                model="models/chat-bison-001",  # Use an appropriate model name
+                messages=[
+                    {"role": "system", "content": sys_prompt},
+                    {"role": "user", "content": user_prompt}
+                ]
             )
-            # Display the response
-            st.write(response.text)
+            # Extract the generated content
+            st.write(response["candidates"][0]["content"])
         except Exception as e:
             st.error(f"An error occurred: {e}")
     else:
