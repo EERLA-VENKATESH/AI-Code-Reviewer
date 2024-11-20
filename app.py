@@ -1,6 +1,6 @@
 import streamlit as st
 import google.generativeai as ai
-st.title("Welcome to Data Science Tutor Application:sunglasses:")
+st.title("VENKATESH AI DS TUTOR:sunglasses:")
 user_prompt=st.text_input("Enter the Query:",placeholder="Type your query here...")
 btn_click=st.button("Generate Answer")
 f = open("Google api key.txt")
