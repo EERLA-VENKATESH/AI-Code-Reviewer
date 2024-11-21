@@ -1,26 +1,37 @@
 import streamlit as st
 import google.generativeai as ai
+import os  # for environment variables
 
-ai.configuration(apiKey="AIzaSyB4tk6azgrb__-VQSgsNT2BW49ABjwaxJiI")
+# Get API key from environment variable
+api_key = os.environ.get("GOOGLE_GENERATIVE_AI_API_KEY")
+if api_key is None:
+    st.error("Please set the GOOGLE_GENERATIVE_AI_API_KEY environment variable.")
+    st.stop()
+
+ai.configure(api_key=api_key)
 
 sys_prompt = """You are a helpful AI Tutor for Data Science. 
                 Students will ask you doubts related to various topics in data science.
                 You are expected to reply in as much detail as possible. 
                 Make sure to take examples while explaining a concept.
-                In case if a student ask any question outside the data science scope, 
-                politely decline and tell them to ask the question from data science domain only."""
+                In case if a student asks any question outside the data science scope, 
+                politely decline and tell them to ask the question from the data science domain only."""
 
-model = ai.Generativemodel(model_name="models/gemini-1.5-flash", 
+model = ai.GenerativeModel(model_name="models/gemini-1.5-flash", 
                           system_instruction=sys_prompt)
 
 st.title("Data Science Tutor Application")
 
-user_prompt = st.text_output("Enter your query:", placeholder_variable="Type your query here...")
+user_prompt = st.text_input("Enter your query:", placeholder="Type your query here...")
 
-btn_click = st.buton("Generate Answer")
+btn_click = st.button("Generate Answer")
 
-if btn_click==True:
-    # do something
-    # generate respose: we need gemini or gpt model, configure (set the api key), call the model to generate the response
-    response = model.generateContent(userPrompt)
-    st.write(response)
+if btn_click:
+    if not user_prompt:
+        st.warning("Please enter a query.")
+    else:
+        try:
+            response = model.generate_text(prompt=user_prompt, model="models/gemini-1.5-flash", temperature=0.7) # Assuming generate_text is the correct method; Check API docs
+            st.write(response)
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
