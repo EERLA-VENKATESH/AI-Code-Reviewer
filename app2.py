@@ -3,7 +3,7 @@ import google.generativeai as ai
 import os  # for environment variables
 
 # Get API key from environment variable
-api_key = os.environ.get("GOOGLE_GENERATIVE_AI_API_KEY")
+api_key = os.environ.get("AIzaSyDv3ygxyKSxcEXJCrC7sp6up7Sbvuyhfh0")
 if api_key is None:
     st.error("Please set the GOOGLE_GENERATIVE_AI_API_KEY environment variable.")
     st.stop()
