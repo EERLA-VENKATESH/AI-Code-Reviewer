@@ -2,7 +2,7 @@ import streamlit as st
 import google.generativeai as ai
 
 # Configure the API key
-ai.configuration(api_key="AIzaSyB4tk6azgrb__-VQSgsNT2BW49ABjwaxJiI")
+ai.configuration(api_key="AIzaSyDv3ygxyKSxcEXJCrC7sp6up7Sbvuyhfh0")
 
 # System prompt for the AI model
 sys_prompt = """
