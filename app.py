@@ -12,7 +12,7 @@ btn_click = st.button("Generate Answer")
 
 # Load API key
 try:
-    with open("Google api key.txt", "r") as f:
+    with open("api.txt", "r") as f:
         key = f.read().strip()
 except FileNotFoundError:
     st.error("Google API key file not found. Please ensure 'Google api key.txt' exists.")
