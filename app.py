@@ -1,42 +1,27 @@
 import streamlit as st
-import google.generativeai as ai
+import google.generativeai as genai
 
-# Configure the API key
-ai.configuration(api_key="AIzaSyDv3ygxyKSxcEXJCrC7sp6up7Sbvuyhfh0")
+# Configure the Google Generative AI API
+genai.configure(api_key="AIzaSyDv3ygxyKSxcEXJCrC7sp6up7Sbvuyhfh0")  # Replace with your actual API key
 
-# System prompt for the AI model
-sys_prompt = """
-You are a helpful AI tutor for Java programming.
-Students will ask you questions related to various topics in Java.
-You are expected to reply in as much detail as possible.
-Make sure to take examples while explaining concepts.
-If a student asks a question outside the Java programming domain,
-politely decline and tell them to ask questions related to Java programming only.
-"""
+# Set up the app layout
+st.title("An AI Code Reviewer")
+st.write("Enter your Python code below for review:")
 
-# Model configuration
-model = ai.GenerativeModel(
-    model_name="models/gemini-1.5-flash",
-    system_instruction=sys_prompt
-)
+# Text area for code input
+user_code = st.text_area("Enter your Python code here...", height=200)
 
-# Streamlit app
-st.title("Java Programming Tutor Application")
-
-# Input field for user prompt
-user_prompt = st.text_input("Enter your query:", placeholder="Type your query here...")
-
-# Button to trigger response generation
-btn_click = st.button("Generate Answer")
-
-# Check if button is clicked
-if btn_click:
-    if user_prompt.strip():  # Ensure the user entered a query
-        try:
-            # Generate response using the AI model
-            response = model.generate_content(user_prompt)
-            st.write(response.text)
-        except Exception as e:
-            st.error(f"An error occurred: {e}")
-    else:
-        st.warning("Please enter a query to generate an answer.")
+# Button to trigger code review
+if st.button("Generate"):
+    if user_code:
+        # Initialize the generative model
+        llm = genai.GenerativeModel("models/gemini-1.5-flash")
+        
+        # Send the user code for review
+        chatbot = llm.start_chat(history=[])
+        response = chatbot.send_message(f"Review the following Python code and identify any bugs:\n{user_code}")
+        
+        # Display the AI-generated response
+        st.subheader("Code Review")
+        st.write("Bug Report:")
+        st.write(response.text)  # Display AI response
