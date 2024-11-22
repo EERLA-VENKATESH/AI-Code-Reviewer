@@ -5,7 +5,8 @@ import google.generativeai as genai
 genai.configure(api_key="AIzaSyDv3ygxyKSxcEXJCrC7sp6up7Sbvuyhfh0")  # Replace with your actual API key
 
 # Set up the app layout
-st.title("An AI Code Reviewer")
+st.title("Developed By: Venkatesh")
+st.title("AI Code Reviewer")
 st.write("Enter your Python code below for review:")
 
 # Text area for code input
