@@ -16,7 +16,7 @@ and enhancing overall code quality in real-time.
 
 ## 📸 Demo
 
-![AI Code Reviewer Screenshot]("C:\Users\ASUS\Documents\OneDrive\Pictures\Screenshots\App_Photo.png")  
+![AI Code Reviewer Screenshot](App_Photo.png)  
 
 ---
 
